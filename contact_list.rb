@@ -17,12 +17,27 @@ class Application
     email = STDIN.gets.chomp.downcase
     ContactDatabase.read_contacts
     Contact.duplicate_entries(email)
+
     puts "Please enter the first name".magenta
     first_name = STDIN.gets.chomp.capitalize
-    puts first_name
+
     puts "Please enter the last name".magenta
     last_name = STDIN.gets.chomp.capitalize
-    p Contact.create(first_name, last_name, email)
+
+    phone_numbers = []
+    puts "Would you like to enter a phone number? (y/n)".magenta
+    choice = STDIN.gets.chomp
+    while choice == 'y'
+      new_phone_number = {}
+      puts "Mobile or Home?"
+      new_phone_number[:label] = STDIN.gets.chomp.capitalize
+      puts "Enter number"
+      new_phone_number[:number] = STDIN.gets.chomp
+      phone_numbers << new_phone_number
+      puts "Would you like to enter another phone number? (y/n)"
+      choice = STDIN.gets.chomp
+    end
+    p Contact.create(first_name, last_name, email, phone_numbers)
     ContactDatabase.write_contacts
   when 'list'
     ContactDatabase.read_contacts

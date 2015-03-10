@@ -2,18 +2,18 @@ require 'pry'
 
 class Contact
  
-  attr_accessor :first_name, :last_name, :email, :id
+  attr_accessor :first_name, :last_name, :email, :id, :phone_numbers
  
   @@contacts = []
 
-  def initialize(first_name, last_name, email)
+  def initialize(first_name, last_name, email, phone_numbers)
     @first_name = first_name
     @last_name = last_name
     @email = email
+    @phone_numbers = phone_numbers
     @id = @@contacts.size + 1
   end
 
-  # binding.pry
  
   def display
     "#{@first_name}, #{@ast_name[0]}. (#{@email})"
@@ -21,9 +21,8 @@ class Contact
  
   ## Class Methods
   class << self
-    def create(first_name, last_name, email)
-      @@contacts << Contact.new(first_name, last_name, email)
-      @@contacts
+    def create(first_name, last_name, email, phone_numbers = [])
+      @@contacts << Contact.new(first_name, last_name, email, phone_numbers)
       # TODO: Will initialize a contact as well as add it to the list of contacts
     end
  
