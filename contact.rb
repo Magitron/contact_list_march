@@ -1,31 +1,64 @@
+require 'pry'
+
 class Contact
  
-  attr_accessor :name, :email
+  attr_accessor :first_name, :last_name, :email, :id
  
-  def initialize(name, email)
-    # TODO: assign local variables to instance variables
+  @@contacts = []
+
+  def initialize(first_name, last_name, email)
+    @first_name = first_name
+    @last_name = last_name
+    @email = email
+    @id = @@contacts.size + 1
   end
+
+  # binding.pry
  
-  def to_s
-    # TODO: return string representation of Contact
+  def display
+    "#{@first_name}, #{@ast_name[0]}. (#{@email})"
   end
  
   ## Class Methods
   class << self
-    def create(name, email)
+    def create(first_name, last_name, email)
+      @@contacts << Contact.new(first_name, last_name, email)
+      @@contacts
       # TODO: Will initialize a contact as well as add it to the list of contacts
     end
  
-    def find(index)
-      # TODO: Will find and return contact by index
+    def find(search_term)
+      @@contacts.each do |contact|
+        if contact.first_name.downcase.include? search_term.downcase
+          puts contact.first_name.yellow
+          puts contact.last_name.yellow
+          puts contact.email.yellow
+        end
+      end
+
     end
  
     def all
-      # TODO: Return the list of contacts, as is
+      @@contacts
     end
     
     def show(id)
-      # TODO: Show a contact, based on ID
+      contact = @@contacts.find {|contact| contact.id == id }
+      if contact == nil 
+        puts "Contact not found.".red
+      else
+        puts contact.first_name.yellow
+        puts contact.last_name.yellow
+        puts contact.email.yellow
+      end
+    end
+
+    def duplicate_entries(entry)
+      @@contacts.each do |contacts|
+        if contacts.email == entry
+          raise NameError, "That contact already exists and cannot be created."
+        end
+      end
     end
     
   end
